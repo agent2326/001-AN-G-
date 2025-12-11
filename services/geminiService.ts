@@ -1,17 +1,9 @@
 import { GoogleGenAI } from "@google/genai";
 import { VisionFormData, CollageTechnique, LightEffect, PosterTheme, PosterStyle, PosterBackground, CollageArtist, CompositionLayout } from "../types";
 
-// --- ИСПРАВЛЕНИЕ: Правильное получение ключа ---
+// --- ИСПРАВЛЕНИЕ: Ключ заменен на указанный пользователем ---
 const getAiInstance = () => {
-    // Пытаемся получить ключ (специально для Vite + Vercel)
-    // @ts-ignore (игнорируем ошибку типа, если TS ругается на import.meta)
-    const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
-
-    if (!apiKey) {
-        console.error("❌ ОШИБКА: API ключ не найден! Проверьте настройки Vercel.");
-        throw new Error("API Key is missing. Please set VITE_GOOGLE_API_KEY in Vercel.");
-    }
-
+    const apiKey = "AIzaSyA12bcBcr9r6bwmKNJkxC74jd4nNx85CVs";
     return new GoogleGenAI({ apiKey: apiKey });
 };
 
