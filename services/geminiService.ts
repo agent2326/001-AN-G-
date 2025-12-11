@@ -149,8 +149,9 @@ export const generateVisionBoard = async (data: VisionFormData): Promise<{ image
         parts.push(processImage(data.secondReferenceImage));
     }
 
+    // NOTE: Must use gemini-2.5-flash-image for image generation. 1.5-flash does not generate images.
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-image', // Убедитесь, что эта модель доступна, иначе используйте gemini-1.5-flash
+      model: 'gemini-2.5-flash-image', 
       contents: {
         parts: parts
       },
@@ -206,7 +207,7 @@ export const suggestCreativeDetails = async (
         `;
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-1.5-flash', // Updated to 1.5-flash for text tasks
             contents: prompt,
         });
 
@@ -254,7 +255,7 @@ export const autoConfigureForm = async (theme: PosterTheme): Promise<Partial<Vis
         `;
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-1.5-flash', // Updated to 1.5-flash for text tasks
             contents: prompt,
             config: {
                 responseMimeType: 'application/json'
@@ -318,7 +319,7 @@ export const removeTextFromImage = async (base64Image: string, mode: 'text_only'
         `;
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash-image',
+            model: 'gemini-2.5-flash-image', // Keeping 2.5-flash-image for editing capabilities
             contents: {
                 parts: [
                     {
