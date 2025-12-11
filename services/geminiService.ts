@@ -1,8 +1,19 @@
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 import { VisionFormData, CollageTechnique, LightEffect, PosterTheme, PosterStyle, PosterBackground, CollageArtist, CompositionLayout } from "../types";
 
-// Helper to get a fresh AI instance
-const getAiInstance = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
+// --- ИСПРАВЛЕНИЕ: Правильное получение ключа ---
+const getAiInstance = () => {
+    // Пытаемся получить ключ (специально для Vite + Vercel)
+    // @ts-ignore (игнорируем ошибку типа, если TS ругается на import.meta)
+    const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+
+    if (!apiKey) {
+        console.error("❌ ОШИБКА: API ключ не найден! Проверьте настройки Vercel.");
+        throw new Error("API Key is missing. Please set VITE_GOOGLE_API_KEY in Vercel.");
+    }
+
+    return new GoogleGenAI({ apiKey: apiKey });
+};
 
 export const generateVisionBoard = async (data: VisionFormData): Promise<{ image: string; prompt: string }> => {
   try {
@@ -147,13 +158,14 @@ export const generateVisionBoard = async (data: VisionFormData): Promise<{ image
     }
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-image', 
+      model: 'gemini-2.5-flash-image', // Убедитесь, что эта модель доступна, иначе используйте gemini-1.5-flash
       contents: {
         parts: parts
       },
       config: {
+        // @ts-ignore
         imageConfig: {
-          aspectRatio: data.aspectRatio
+            aspectRatio: data.aspectRatio // Временное решение для типов
         }
       }
     });
