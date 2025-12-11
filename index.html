@@ -20,39 +20,47 @@
             colors: {
               cream: '#FDFBF7',
               gold: {
-                50: '#FCF9F0',  // Very light background
-                100: '#F7F0D8', // Light background
-                200: '#EEDDAF', // Borders / Accents light
-                300: '#D4AF37', // Primary Gold (Classic)
-                400: '#C5A028', // Darker Gold
-                500: '#A68620', // Text Gold
+                50: '#FCF9F0',
+                100: '#F7F0D8',
+                200: '#EEDDAF',
+                300: '#D4AF37',
+                400: '#C5A028',
+                500: '#A68620',
                 600: '#856914',
                 700: '#644D0C',
                 800: '#463506',
                 900: '#2D2203',
               },
               stone: {
-                800: '#292524', // Dark Chocolate/Graphite equivalent
+                800: '#292524',
               }
             }
           }
         }
       }
     </script>
-  <script type="importmap">
+    <!-- Importmap is essential for this preview environment. 
+         If building with Vite locally, Vite will handle imports automatically and ignore this. -->
+    <script type="importmap">
 {
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.2.1",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.1/client",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.1",
     "@google/genai": "https://aistudiocdn.com/@google/genai@^1.32.0",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0"
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.1/",
+    "react/": "https://esm.sh/react@^19.2.1/",
+    "vite": "https://esm.sh/vite@^7.2.7",
+    "path": "https://esm.sh/path@^0.12.7"
   }
 }
 </script>
-</head>
+  </head>
   <body>
     <div id="root"></div>
+    <!-- Entry point is ./index.tsx because the file is in the root, not src/ -->
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>
